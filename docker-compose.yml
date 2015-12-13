@@ -1,0 +1,3 @@
+appearbot:
+  build: .
+  restart: always
