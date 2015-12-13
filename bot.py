@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 
 from aiohttp import get
 from aiotg import TgBot
@@ -11,16 +12,20 @@ with open("config.json") as cfg:
     config = json.load(cfg)
 
 bot = TgBot(**config)
+logger = logging.getLogger("appear.in")
 
 
 @bot.command(r"/appear")
 async def echo(chat, match):
     async with get(ROOM_API) as res:
-        rname = (await res.json())["roomName"][1:]
-        url = "https://appear.in/" + rname
-        invite = INVITE_TEXT % (chat.sender["first_name"], rname, url)
+        room = (await res.json())["roomName"][1:]
+        user = chat.sender["first_name"]
+        url = "https://appear.in/" + room
+        invite = INVITE_TEXT % (user, room, url)
+        logger.info("%s created room '%s'", user, room)
         await chat.send_text(invite, parse_mode="Markdown")
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     bot.run()
