@@ -1,5 +1,4 @@
 import os
-import json
 import logging
 
 from aiohttp import get
@@ -8,10 +7,10 @@ from aiotg import TgBot
 INVITE_TEXT = "%s has started a video conference in room: [%s](%s)"
 ROOM_API = "https://api.appear.in/random-room-name"
 
-with open("config.json") as cfg:
-    config = json.load(cfg)
-
-bot = TgBot(**config)
+bot = TgBot(
+    api_token=os.environ.get("API_TOKEN"),
+    botan_token=os.environ.get("BOTAN_TOKEN")
+)
 logger = logging.getLogger("appear.in")
 
 
