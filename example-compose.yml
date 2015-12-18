@@ -1,0 +1,5 @@
+appearbot:
+  environment:
+    - API_TOKEN=Your token
+  image: szastupov/appearbot
+  restart: always
