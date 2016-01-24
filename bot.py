@@ -15,7 +15,7 @@ logger = logging.getLogger("appear.in")
 
 
 @bot.command(r"/appear")
-async def echo(chat, match):
+async def appear(chat, match):
     async with get(ROOM_API) as res:
         room = (await res.json())["roomName"][1:]
         user = chat.sender["first_name"]
